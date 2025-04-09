@@ -5,6 +5,7 @@ import rasterio
 import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
+import os
 
 st.set_page_config(
     layout='wide',
@@ -91,10 +92,42 @@ st.markdown("""
         div[role="checkbox"] label {
             color: white !important;
         }
-
+        
         section[data-testid="stSidebar"] > div {
             margin-bottom: 20px;
         }
+                .small-box {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .small-box h4 {
+            font-size: 18px;
+        }
+        .small-box p {
+            font-size: 16px;
+        }
+        /* Latitude */
+        [data-testid="stTextInput"][data-baseweb="input"] > div:has(input[id*="lat_input"]) input {
+            width: 120px !important;
+            height: 30px !important;
+            font-size: 14px !important;
+            background: red !important;
+        }
+
+        /* Longitude */
+        [data-testid="stTextInput"][data-baseweb="input"] > div:has(input[id*="lon_input"]) input {
+            width: 120px !important;
+            height: 30px !important;
+            font-size: 14px !important;
+        }
+            .st-c5{
+                height: 35px !important;
+                width: 407px !important;
+                max-width: 500px
+            }
+            
+
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -188,7 +221,7 @@ with col3:
 # Bloco para gráficos e imagem com 2 colunas
 st.divider()
 g1, g2 = st.columns([2, 1.3])
-
+l1, l2, l3 = st.columns([2, 2, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
@@ -227,9 +260,13 @@ with g2:
             plt.grid(True)
             st.pyplot(plt)
         with g1:
-            latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505")
-            longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
-            def get_pixel_value(lat, lon, raster_path=".\\nota_5\\nota_5.tif"):
+            lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
+            with lat_col:
+                latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505", key="teste")
+            with lon_col:
+                longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
+
+                def get_pixel_value(lat, lon, raster_path=".\\nota_5\\nota_5.tif"):
                     with rasterio.open(raster_path) as dataset:
                         try:
                             row, col = dataset.index(float(lon), float(lat))
@@ -237,18 +274,16 @@ with g2:
                             return value
                         except:
                             return "Coordenadas fora da área do raster"
-        with g2:
-            if latitude_str and longitude_str:
-                    nota_pixel = get_pixel_value(latitude_str, longitude_str)
+
+        # Se os campos estiverem preenchidos, mostra as caixas abaixo
+        with g1:
             if latitude_str and longitude_str:
                 try:
+                    nota_pixel = get_pixel_value(latitude_str, longitude_str)
                     latitude = float(latitude_str)
                     longitude = float(longitude_str)
 
-                        # Criar o ponto
                     ponto = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)], crs="EPSG:4326")
-
-                        # Interseção com os municípios
                     municipio_info = gpd.sjoin(ponto, municipios, how="left", predicate="within")
 
                     if municipio_info.empty:
@@ -256,18 +291,34 @@ with g2:
                     else:
                         nome_municipio = municipio_info.iloc[0].get("NM_MUN", "Desconhecido")
                         uf = municipio_info.iloc[0].get("NM_UF", "Desconhecido")
-                    st.markdown(f"""
-                        <div style="background-color:#262730; padding:20px; border-radius:10px; margin-bottom:10px;">
-                            <h4 style="color:white;">Nota da Coordenada</h4>
-                            <p style="color:white; font-size:22px;">{nota_pixel}</p> 
-                            <h4 style="color:white;">Estado</h4>
-                            <p style="color:white; font-size:22px;">{uf}</p>
-                            <h4 style="color:white;">Municipio</h4>
-                            <p style="color:white; font-size:22px;">{nome_municipio}</p>
-                        </div>
-                    """, unsafe_allow_html=True)
+
+                    # Caixas aparecem abaixo dos campos
+                    l1, l2, l3 = st.columns([1, 1, 1])
+                    with l1:
+                        st.markdown(f"""
+                            <div class="hover-box small-box">
+                                <h4>Nota</h4>
+                                <p>{nota_pixel:.2f}</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    with l2:
+                        st.markdown(f"""
+                            <div class="hover-box small-box">
+                                <h4>Estado</h4>
+                                <p>{uf}</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    with l3:
+                        st.markdown(f"""
+                            <div class="hover-box small-box">
+                                <h4>Município</h4>
+                                <p>{nome_municipio}</p>
+                            </div>
+                        """, unsafe_allow_html=True)
+
                 except ValueError:
                     st.error("Latitude e longitude devem ser números válidos.")
+
     elif opcao == "Região" and regiao:
         df['NOTA_MEDIA'] = df['NOTA_MEDIA'].str.replace(',', '.').astype(float)
         estados_na_regiao = df[df['REGIÕES'] == regiao]
