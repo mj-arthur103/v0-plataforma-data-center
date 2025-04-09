@@ -149,7 +149,7 @@ if "show_inputs" not in st.session_state:
     st.session_state.show_inputs = True
 
 # Leitura dos dados
-df = pd.read_csv("Planilha_plataforma.csv")
+df = pd.read_csv("Planilha_Plataforma.csv")
 dfr = pd.read_csv("Planilha_regioes.csv")
 municipios= gpd.read_file(".\BR_Municipios_2023\BR_Municipios_2023.shp")
 
@@ -266,7 +266,7 @@ with g2:
             with lon_col:
                 longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
 
-                def get_pixel_value(lat, lon, raster_path=".\\nota_5\\nota_5.tif"):
+                def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
                     with rasterio.open(raster_path) as dataset:
                         try:
                             row, col = dataset.index(float(lon), float(lat))
