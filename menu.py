@@ -120,6 +120,10 @@ st.markdown("""
             height: 30px !important;
             font-size: 14px !important;
         }
+        img {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
     </style>
     """, unsafe_allow_html=True)
 
