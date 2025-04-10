@@ -14,6 +14,10 @@ st.set_page_config(
 
 st.markdown("""
     <style>
+        header[data-testid="stHeader"] {
+            background: rgb(239,241,244);
+            background: linear-gradient(90deg, rgba(239,241,244,1) 0%, rgba(211,217,226,1) 100%);
+        }
         .hover-box {
             background-color: white;
             padding: 20px;
@@ -41,7 +45,8 @@ st.markdown("""
         }
 
         .stApp {
-            background-color: #D3D9E2;
+            background: rgb(239,241,244);
+            background: linear-gradient(90deg, rgba(239,241,244,1) 0%, rgba(211,217,226,1) 100%);
         }
 
         section[data-testid="stSidebar"] {
