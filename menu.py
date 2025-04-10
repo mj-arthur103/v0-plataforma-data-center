@@ -120,14 +120,6 @@ st.markdown("""
             height: 30px !important;
             font-size: 14px !important;
         }
-            .st-c5{
-                height: 35px !important;
-                width: 407px !important;
-                max-width: 500px
-            }
-            
-
-
     </style>
     """, unsafe_allow_html=True)
 
@@ -251,13 +243,13 @@ with g2:
             nodata_value = dataset.nodata
             if nodata_value is not None:
                 band = band[band != nodata_value]
-
+            
             plt.figure(figsize=(8, 4.5))
             plt.hist(band.flatten(), bins=30, color="#1A4466", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
             plt.ylabel("Frequência")
             plt.title("Histograma dos Pixels do Raster")
-            plt.grid(True)
+            plt.grid(True, alpha= 0.4)
             st.pyplot(plt)
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
