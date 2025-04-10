@@ -302,15 +302,15 @@ with g2:
                     with l2:
                         st.markdown(f"""
                             <div class="hover-box small-box">
-                                <h4>Estado</h4>
-                                <p>{uf}</p>
+                                <h4>Município</h4>
+                                <p>{nome_municipio}</p>
                             </div>
                         """, unsafe_allow_html=True)
                     with l3:
                         st.markdown(f"""
                             <div class="hover-box small-box">
-                                <h4>Município</h4>
-                                <p>{nome_municipio}</p>
+                                <h4>Estado</h4>
+                                <p>{uf}</p>
                             </div>
                         """, unsafe_allow_html=True)
 
