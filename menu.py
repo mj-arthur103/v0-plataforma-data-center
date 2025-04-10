@@ -213,15 +213,17 @@ with col3:
 # Bloco para gráficos e imagem com 2 colunas
 st.divider()
 g1, g2 = st.columns([2, 1.3])
-l1, l2, l3 = st.columns([2, 2, 2])
+l1, l2, l3 = st.columns([2, 10, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
         st.image(f".\\mapas\\{IMAGEM_3}.jpeg", caption='Mapa do Brasil')
-    elif opcao == "Estado" and estado:
+with l2:        
+    if opcao == "Estado" and estado:
         IMAGEM = df_filtered['IMG_JPEG'].values[0]
         st.image(f".\\mapas\\{IMAGEM}.jpeg", caption=f'Mapa do {estado}')
-    elif opcao == "Região" and regiao:
+with g1:
+    if opcao == "Região" and regiao:
         IMAGEM_2 = dfr_filtered2['IMG_JPEG_1'].values[0]
         st.image(f".\\REGIOES\\{IMAGEM_2}.jpeg", caption=f'Região {regiao}')
 
