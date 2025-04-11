@@ -143,7 +143,22 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-st.markdown('<p class =="big-font"> Texto Raniere ! </p>',unsafe_allow_html=True)
+
+st.markdown(f"""
+<p class="big-font">
+            
+No contexto da chamada Quarta Revolução Industrial, o uso intensivo de dados e sistemas digitais interconectados é indispensável para o desenvolvimento econômico, gerando aumento da competitividade, da produtividade, da inovação e dos níveis de emprego e renda.
+
+A presença em território nacional de estruturas físicas e de prestação de serviços especializados de armazenamento, gerenciamento e segurança de dados estimula a inovação e o conhecimento. Nesse cenário, os data centers constituem uma infraestrutura essencial para a consolidação de um ecossistema voltado para a economia de dados, impulsionando os setores agrícola, industrial e de comércio e serviços.
+
+Nesse sentido, a atração de centros de dados (Data Centers), apontada pela Estratégia Brasileira para a Transformação Digital (E-Digital), se faz necessária para permitir que haja incentivo ao desenvolvimento tecnológico, fomentando a cadeia de valor da economia de digital.
+</p>
+    """, unsafe_allow_html=True)
+
+
+
+
+
 st.divider()
 
 if "show_inputs" not in st.session_state:
@@ -264,15 +279,15 @@ with g2:
             st.pyplot(plt)
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
-            with lat_col:
-                latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505")
-                if latitude_str and not re.match(r"^-?\d+(\.\d+)?$", latitude_str.strip()):
-                    st.error("Digite uma latitude válida (apenas números, ponto e sinal negativo)")
+        with lat_col:
+            latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505")
+            if latitude_str and not re.match(r"^-?\d+(\.\d+)?$", latitude_str.strip()):
+                st.error("Digite uma latitude válida (apenas números, ponto e sinal negativo)")
 
-            with lon_col:
-                longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
-                if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
-                    st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
+        with lon_col:
+            longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
+            if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
+                st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
                 def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
                     with rasterio.open(raster_path) as dataset:
