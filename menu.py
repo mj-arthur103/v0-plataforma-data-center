@@ -5,7 +5,7 @@ import rasterio
 import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
-import os
+import re
 
 st.set_page_config(
     layout='wide',
@@ -265,9 +265,14 @@ with g2:
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
             with lat_col:
-                latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505", key="teste")
+                latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505")
+                if latitude_str and not re.match(r"^-?\d+(\.\d+)?$", latitude_str.strip()):
+                    st.error("Digite uma latitude válida (apenas números, ponto e sinal negativo)")
+
             with lon_col:
                 longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
+                if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
+                    st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
                 def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
                     with rasterio.open(raster_path) as dataset:
