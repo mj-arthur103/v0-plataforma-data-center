@@ -355,3 +355,8 @@ with g2:
 
 st.divider()
 st.subheader('Calculadora de Viabiliade')
+h1,h2=st.columns([1,1])
+with h1:
+    st.image(f".\\Calculadora\\Conceito.png")
+with h1:
+    st.image(f".\\Calculadora\\Formula.png")
