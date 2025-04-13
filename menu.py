@@ -129,6 +129,7 @@ st.markdown("""
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             border-radius: 12px;
         }
+        
     </style>
     """, unsafe_allow_html=True)
 
@@ -139,7 +140,7 @@ st.markdown("""
 <style>
 .big-font {
     font-size:25px !important;
-    color: white;
+    color: black;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -355,8 +356,19 @@ with g2:
 
 st.divider()
 st.subheader('Calculadora de Viabiliade')
-h1,h2=st.columns([1,1])
+h1,h2=st.columns([5,4])
+x1,x2=st.columns([19,1])
+y1,y2=st.columns([8,4])
+
 with h1:
     st.image(f".\\Calculadora\\Conceito.png")
-with h1:
+with x1:
     st.image(f".\\Calculadora\\Formula.png")
+with y1:
+    st.image(f".\\Calculadora\\conceito_1.png")
+with h2:
+    st.markdown(f"""
+    <p class="big-font">
+    A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
+    </p>
+        """, unsafe_allow_html=True)
