@@ -250,8 +250,8 @@ with g1:
         IMAGEM_2 = dfr_filtered2['IMG_JPEG_1'].values[0]
         st.image(f".\\REGIOES\\{IMAGEM_2}.jpeg", caption=f'Região {regiao}')
 
-with g2:
-    if opcao == "Brasil":
+if opcao == "Brasil":
+    with g2:
         df['NOTA_MEDIA'] = df['NOTA_MEDIA'].str.replace(',', '.').astype(float)
         df_estados = df[df['SIGLA'] != 'BR']
         df_grouped = df_estados.sort_values(by='NOTA_MEDIA', ascending=False)
@@ -340,33 +340,33 @@ with g2:
 
                 except ValueError:
                     st.error("Latitude e longitude devem ser números válidos.")
+    st.divider()
+    st.subheader('Calculadora de Viabiliade')
+    h1,h2=st.columns([2, 1.3])
 
-    elif opcao == "Região" and regiao:
-        df['NOTA_MEDIA'] = df['NOTA_MEDIA'].str.replace(',', '.').astype(float)
-        estados_na_regiao = df[df['REGIÕES'] == regiao]
-        estados_ordenados = estados_na_regiao.sort_values(by='NOTA_MEDIA', ascending=False)
-        plt.figure(figsize=(8, 3))
-        plt.bar(estados_ordenados['SIGLA'], estados_ordenados['NOTA_MEDIA'], color='#082C4F')
-        plt.xlabel('Estado')
-        plt.ylabel('Nota Média')
-        plt.title(f'Nota Média por Estado - Região {regiao}')
-        st.pyplot(plt)
+    with h1:
+        st.image(".\\Calculadora\\Conceito.png", width=1000)
 
-st.divider()
-st.subheader('Calculadora de Viabiliade')
-h1,h2=st.columns([2, 1.3])
+    with h2:
+        with st.container():
+            st.image(".\\Calculadora\\Formula.png", width=760)
 
-with h1:
-    st.image(".\\Calculadora\\Conceito.png", width=1000)
+        with st.container():
+            st.image(".\\Calculadora\\conceito_1.png", width=760)
+    st.markdown(f"""
+    <p class="big-font">
+    A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
+    </p>
+        """, unsafe_allow_html=True)
 
-with h2:
-    with st.container():
-        st.image(".\\Calculadora\\Formula.png", width=760)
-
-    with st.container():
-        st.image(".\\Calculadora\\conceito_1.png", width=760)
-st.markdown(f"""
-<p class="big-font">
-A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
-</p>
-    """, unsafe_allow_html=True)
+elif opcao == "Região" and regiao:
+        with g2:
+            df['NOTA_MEDIA'] = df['NOTA_MEDIA'].str.replace(',', '.').astype(float)
+            estados_na_regiao = df[df['REGIÕES'] == regiao]
+            estados_ordenados = estados_na_regiao.sort_values(by='NOTA_MEDIA', ascending=False)
+            plt.figure(figsize=(8, 3))
+            plt.bar(estados_ordenados['SIGLA'], estados_ordenados['NOTA_MEDIA'], color='#082C4F')
+            plt.xlabel('Estado')
+            plt.ylabel('Nota Média')
+            plt.title(f'Nota Média por Estado - Região {regiao}')
+            st.pyplot(plt)
