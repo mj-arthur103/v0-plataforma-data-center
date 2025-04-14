@@ -137,25 +137,23 @@ st.title('DashBoard Datas Centers')
 st.markdown("""
 <style>
 .big-font {
-    font-size:25px !important;
+    font-size:22px !important;
     color: black;
 }
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown(f"""
-<p class="big-font">
-            
+<p class="big-font">            
 No contexto da chamada Quarta Revolução Industrial, o uso intensivo de dados e sistemas digitais interconectados é indispensável para o desenvolvimento econômico, gerando aumento da competitividade, da produtividade, da inovação e dos níveis de emprego e renda.
-
+<br/>
+<br/>                        
 A presença em território nacional de estruturas físicas e de prestação de serviços especializados de armazenamento, gerenciamento e segurança de dados estimula a inovação e o conhecimento. Nesse cenário, os data centers constituem uma infraestrutura essencial para a consolidação de um ecossistema voltado para a economia de dados, impulsionando os setores agrícola, industrial e de comércio e serviços.
-
+<br/>
+<br/>
 Nesse sentido, a atração de centros de dados (Data Centers), apontada pela Estratégia Brasileira para a Transformação Digital (E-Digital), se faz necessária para permitir que haja incentivo ao desenvolvimento tecnológico, fomentando a cadeia de valor da economia de digital.
 </p>
     """, unsafe_allow_html=True)
-
-
-
 
 
 st.divider()
@@ -191,6 +189,12 @@ st.sidebar.subheader('Escolha os cenários:')
 mostrar = st.sidebar.radio("Qual cenário você deseja visualizar?", ["Cenário 1", "Cenário 2", "Cenário 3"])
 
 st.sidebar.divider()
+
+#Espaço
+st.sidebar.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+
+# Logo do ISI no final da sidebar
+st.sidebar.image(".\\isi\\ISI_White.png", use_container_width=True)
 
 col1, col2, col3 = st.columns([5, 5, 5])
 
