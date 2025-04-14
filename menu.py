@@ -129,8 +129,6 @@ st.markdown("""
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             border-radius: 12px;
         }
-        
-    </style>
     """, unsafe_allow_html=True)
 
 
@@ -238,7 +236,7 @@ with col3:
 # Bloco para gráficos e imagem com 2 colunas
 st.divider()
 g1, g2 = st.columns([2, 1.3])
-l1, l2, l3 = st.columns([2, 10, 2])
+l1, l2, l3 = st.columns([2, 8, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
@@ -290,14 +288,14 @@ with g2:
             if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
                 st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
-                def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
-                    with rasterio.open(raster_path) as dataset:
-                        try:
-                            row, col = dataset.index(float(lon), float(lat))
-                            value = dataset.read(1)[row, col]
-                            return value
-                        except:
-                            return "Coordenadas fora da área do raster"
+            def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
+                with rasterio.open(raster_path) as dataset:
+                    try:
+                        row, col = dataset.index(float(lon), float(lat))
+                        value = dataset.read(1)[row, col]
+                        return value
+                    except:
+                        return "Coordenadas fora da área do raster"
 
         # Se os campos estiverem preenchidos, mostra as caixas abaixo
         with g1:
@@ -356,19 +354,19 @@ with g2:
 
 st.divider()
 st.subheader('Calculadora de Viabiliade')
-h1,h2=st.columns([5,4])
-x1,x2=st.columns([19,1])
-y1,y2=st.columns([8,4])
+h1,h2=st.columns([2, 1.3])
 
 with h1:
-    st.image(f".\\Calculadora\\Conceito.png")
-with x1:
-    st.image(f".\\Calculadora\\Formula.png")
-with y1:
-    st.image(f".\\Calculadora\\conceito_1.png")
+    st.image(".\\Calculadora\\Conceito.png", width=1000)
+
 with h2:
-    st.markdown(f"""
-    <p class="big-font">
-    A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
-    </p>
-        """, unsafe_allow_html=True)
+    with st.container():
+        st.image(".\\Calculadora\\Formula.png", width=760)
+
+    with st.container():
+        st.image(".\\Calculadora\\conceito_1.png", width=760)
+st.markdown(f"""
+<p class="big-font">
+A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
+</p>
+    """, unsafe_allow_html=True)
