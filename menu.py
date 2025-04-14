@@ -6,6 +6,7 @@ import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
 import re
+import requests
 
 st.set_page_config(
     layout='wide',
@@ -164,7 +165,28 @@ if "show_inputs" not in st.session_state:
 # Leitura dos dados
 df = pd.read_csv("Planilha_Plataforma.csv")
 dfr = pd.read_csv("Planilha_regioes.csv")
-municipios= gpd.read_file(".\BR_Municipios_2023\BR_Municipios_2023.shp")
+#municipios= gpd.read_file("./BR_Municipios_2023/BR_Municipios_2023.shp")
+
+def get_location_info(lat, lon):
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {
+        "lat": lat,
+        "lon": lon,
+        "format": "json",
+        "addressdetails": 1
+    }
+    headers = {
+        "User-Agent": "MeuAppStreamlit"  # importante para evitar bloqueio
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        municipio = data["address"].get("city") or data["address"].get("town") or data["address"].get("village")
+        estado = data["address"].get("state")
+        return municipio or "Desconhecido", estado or "Desconhecido"
+    else:
+        return "Desconhecido", "Desconhecido"
 
 # Sidebar - Opções de visualização
 st.sidebar.subheader('Escolha qual mapa deseja visualizar:')
@@ -309,14 +331,15 @@ if opcao == "Brasil":
                     latitude = float(latitude_str)
                     longitude = float(longitude_str)
 
-                    ponto = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)], crs="EPSG:4326")
+                    nome_municipio, uf = get_location_info(latitude, longitude)
+                    """ponto = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)], crs="EPSG:4326")
                     municipio_info = gpd.sjoin(ponto, municipios, how="left", predicate="within")
 
                     if municipio_info.empty:
                         st.warning("Coordenada fora de qualquer município!")
                     else:
                         nome_municipio = municipio_info.iloc[0].get("NM_MUN", "Desconhecido")
-                        uf = municipio_info.iloc[0].get("NM_UF", "Desconhecido")
+                        uf = municipio_info.iloc[0].get("NM_UF", "Desconhecido")"""
 
                     # Caixas aparecem abaixo dos campos
                     l1, l2, l3 = st.columns([1, 1, 1])
