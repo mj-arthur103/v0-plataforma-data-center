@@ -132,7 +132,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 
-st.title('DashBoard Datas Centers')
+st.title('Estratégias Locacionais para Infraestruturas de Data Centers no Brasil')
 
 st.markdown("""
 <style>
