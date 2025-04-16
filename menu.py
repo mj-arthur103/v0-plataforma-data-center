@@ -176,17 +176,22 @@ def get_location_info(lat, lon):
         "addressdetails": 1
     }
     headers = {
-        "User-Agent": "MeuAppStreamlit"  # importante para evitar bloqueio
+        "User-Agent": "MeuAppStreamlit"
     }
 
-    response = requests.get(url, params=params, headers=headers)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
         data = response.json()
-        municipio = data["address"].get("city") or data["address"].get("town") or data["address"].get("village")
-        estado = data["address"].get("state")
-        return municipio or "Desconhecido", estado or "Desconhecido"
-    else:
-        return "Desconhecido", "Desconhecido"
+
+        if "address" in data:
+            municipio = data["address"].get("city") or data["address"].get("town") or data["address"].get("village")
+            estado = data["address"].get("state")
+            return municipio or "Desconhecido", estado or "Desconhecido"
+        else:
+            return "Coordenada inválida", "Coordenada inválida"
+    except Exception as e:
+        return "Erro na consulta", "Erro na consulta"
 
 # Sidebar - Opções de visualização
 st.sidebar.subheader('Escolha qual mapa deseja visualizar:')
@@ -332,38 +337,32 @@ if opcao == "Brasil":
                     longitude = float(longitude_str)
 
                     nome_municipio, uf = get_location_info(latitude, longitude)
-                    """ponto = gpd.GeoDataFrame(geometry=[Point(longitude, latitude)], crs="EPSG:4326")
-                    municipio_info = gpd.sjoin(ponto, municipios, how="left", predicate="within")
-
-                    if municipio_info.empty:
-                        st.warning("Coordenada fora de qualquer município!")
+                    if "Coordenada inválida" in (nome_municipio, uf) or "Erro" in (nome_municipio, uf):
+                        st.error("Coordenadas inválidas ou fora do território nacional.")
                     else:
-                        nome_municipio = municipio_info.iloc[0].get("NM_MUN", "Desconhecido")
-                        uf = municipio_info.iloc[0].get("NM_UF", "Desconhecido")"""
-
                     # Caixas aparecem abaixo dos campos
-                    l1, l2, l3 = st.columns([1, 1, 1])
-                    with l1:
-                        st.markdown(f"""
-                            <div class="hover-box small-box">
-                                <h4>Nota</h4>
-                                <p>{nota_pixel:.2f}</p>
-                            </div>
-                        """, unsafe_allow_html=True)
-                    with l2:
-                        st.markdown(f"""
-                            <div class="hover-box small-box">
-                                <h4>Município</h4>
-                                <p>{nome_municipio}</p>
-                            </div>
-                        """, unsafe_allow_html=True)
-                    with l3:
-                        st.markdown(f"""
-                            <div class="hover-box small-box">
-                                <h4>Estado</h4>
-                                <p>{uf}</p>
-                            </div>
-                        """, unsafe_allow_html=True)
+                        l1, l2, l3 = st.columns([1, 1, 1])
+                        with l1:
+                            st.markdown(f"""
+                                <div class="hover-box small-box">
+                                    <h4>Nota</h4>
+                                    <p>{nota_pixel:.2f}</p>
+                                </div>
+                            """, unsafe_allow_html=True)
+                        with l2:
+                            st.markdown(f"""
+                                <div class="hover-box small-box">
+                                    <h4>Município</h4>
+                                    <p>{nome_municipio}</p>
+                                </div>
+                            """, unsafe_allow_html=True)
+                        with l3:
+                            st.markdown(f"""
+                                <div class="hover-box small-box">
+                                    <h4>Estado</h4>
+                                    <p>{uf}</p>
+                                </div>
+                            """, unsafe_allow_html=True)
 
                 except ValueError:
                     st.error("Latitude e longitude devem ser números válidos.")
