@@ -221,7 +221,7 @@ st.sidebar.divider()
 st.sidebar.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
 
 # Logo do ISI no final da sidebar
-st.sidebar.image(".\\isi\\ISI_White.png", use_container_width=True)
+st.sidebar.image("isi/ISI_White.png", use_container_width=True)
 
 col1, col2, col3 = st.columns([5, 5, 5])
 
@@ -271,15 +271,15 @@ l1, l2, l3 = st.columns([2, 8, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
-        st.image(f".\\mapas\\{IMAGEM_3}.jpeg", caption='Mapa do Brasil')
+        st.image(f"mapas/{IMAGEM_3}.jpeg", caption='Mapa do Brasil')
 with l2:        
     if opcao == "Estado" and estado:
         IMAGEM = df_filtered['IMG_JPEG'].values[0]
-        st.image(f".\\mapas\\{IMAGEM}.jpeg", caption=f'Mapa do {estado}')
+        st.image(f"mapas/{IMAGEM}.jpeg", caption=f'Mapa do {estado}')
 with g1:
     if opcao == "Região" and regiao:
         IMAGEM_2 = dfr_filtered2['IMG_JPEG_1'].values[0]
-        st.image(f".\\REGIOES\\{IMAGEM_2}.jpeg", caption=f'Região {regiao}')
+        st.image(f"REGIOES/{IMAGEM_2}.jpeg", caption=f'Região {regiao}')
 
 if opcao == "Brasil":
     with g2:
@@ -294,7 +294,7 @@ if opcao == "Brasil":
         plt.title('Nota Média por Estado')
         st.pyplot(plt)
 
-        with rasterio.open(".\\nota_5\\nota_5.tif") as dataset:
+        with rasterio.open("nota_5/nota_5.tif") as dataset:
             band = dataset.read(1)
             nodata_value = dataset.nodata
             if nodata_value is not None:
@@ -319,7 +319,7 @@ if opcao == "Brasil":
             if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
                 st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
-            def get_pixel_value(lat, lon, raster_path=".\\nota_5\\NotaFinal.tif"):
+            def get_pixel_value(lat, lon, raster_path="/nota_5/NotaFinal.tif"):
                 with rasterio.open(raster_path) as dataset:
                     try:
                         row, col = dataset.index(float(lon), float(lat))
@@ -371,14 +371,14 @@ if opcao == "Brasil":
     h1,h2=st.columns([2, 1.3])
 
     with h1:
-        st.image(".\\Calculadora\\Conceito.png", width=1000)
+        st.image("Calculadora/Conceito.png", width=1000)
 
     with h2:
         with st.container():
-            st.image(".\\Calculadora\\Formula.png", width=760)
+            st.image("Calculadora/Formula.png", width=760)
 
         with st.container():
-            st.image(".\\Calculadora\\conceito_1.png", width=760)
+            st.image("Calculadora/conceito_1.png", width=760)
     st.markdown(f"""
     <p class="big-font">
     A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
