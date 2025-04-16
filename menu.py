@@ -252,7 +252,7 @@ with col1:
 with col2:
     st.markdown(f"""
         <div class="hover-box">
-            <h4>Área Disponível com a nota maior 5</h4>
+            <h4>Área Disponível com as notas maiores que 5</h4>
             <p style="font-size:22px;">{area_disp_20} km²</p>
         </div>
     """, unsafe_allow_html=True)
@@ -297,15 +297,28 @@ if opcao == "Brasil":
         with rasterio.open("./nota_5/nota_5.tif") as dataset:
             band = dataset.read(1)
             nodata_value = dataset.nodata
+
             if nodata_value is not None:
                 band = band[band != nodata_value]
+
+            band_flat = band.flatten()
+            band_flat = band_flat[~np.isnan(band_flat)]
+
+            bins = [5, 6, 7, 8, 9, 10]
+            hist, bin_edges = np.histogram(band_flat, bins=bins)
+
+            total = hist.sum()
+            percentages = (hist / total) * 100
+
+            labels = [f"{bins[i]}–{bins[i+1]}" for i in range(len(bins)-1)]
             
             plt.figure(figsize=(8, 4.5))
-            plt.hist(band.flatten(), bins=30, color="#1A4466", edgecolor="white", alpha=1)
+            bars = plt.bar(labels, percentages, color="#1A4466", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
-            plt.ylabel("Frequência")
-            plt.title("Histograma dos Pixels do Raster")
+            plt.ylabel("Frequência (%)")
+            plt.title("Histograma das Adequações (Frequência de ocorrências das notas)")
             plt.grid(True, alpha= 0.4)
+
             st.pyplot(plt)
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
