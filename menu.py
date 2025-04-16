@@ -410,14 +410,14 @@ if opcao == "Brasil":
     h1,h2=st.columns([2, 1.3])
 
     with h1:
-        st.image("./Calculadora/Conceito.png", width=1000)
+        st.image("./Calculadora/Conceito.png",use_container_width=True)
 
     with h2:
         with st.container():
-            st.image("./Calculadora/Formula.png", width=760)
+            st.image("./Calculadora/Formula.png",use_container_width=True)
 
         with st.container():
-            st.image("./Calculadora/conceito_1.png", width=760)
+            st.image("./Calculadora/conceito_1.png", use_container_width=True)
     st.markdown(f"""
     <p class="big-font">
     A análise econômica pode utilizar métricas como o Custo Nivelado de Processamento(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
