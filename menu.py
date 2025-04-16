@@ -7,6 +7,7 @@ import geopandas as gpd
 from shapely.geometry import Point
 import re
 import requests
+import base64
 
 st.set_page_config(
     layout='wide',
@@ -130,6 +131,10 @@ st.markdown("""
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             border-radius: 12px;
         }
+        .logo-isi {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        }
     """, unsafe_allow_html=True)
 
 
@@ -221,7 +226,28 @@ st.sidebar.divider()
 st.sidebar.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
 
 # Logo do ISI no final da sidebar
-st.sidebar.image("isi/ISI_White.png", use_container_width=True)
+
+def get_image_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+base64_logo = get_image_base64("isi/ISI_White.png")
+st.sidebar.markdown(
+    f"""
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="data:image/png;base64,{base64_logo}" alt="Logo ISI"
+            style="
+                width: 180px;
+                height: auto;
+                background-color: none;
+                padding: 8px;
+                border-radius: 6px;
+                box-shadow: none;
+            ">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 col1, col2, col3 = st.columns([5, 5, 5])
 
@@ -252,7 +278,7 @@ with col1:
 with col2:
     st.markdown(f"""
         <div class="hover-box">
-            <h4>Área Disponível com as notas maiores que 5</h4>
+            <h4>Área disponível com nota maior que 5</h4>
             <p style="font-size:22px;">{area_disp_20} km²</p>
         </div>
     """, unsafe_allow_html=True)
@@ -271,15 +297,15 @@ l1, l2, l3 = st.columns([2, 8, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
-        st.image(f"./mapas/{IMAGEM_3}.jpeg", caption='Mapa do Brasil')
+        st.image(f"./mapas/{IMAGEM_3}.jpeg")
 with l2:        
     if opcao == "Estado" and estado:
         IMAGEM = df_filtered['IMG_JPEG'].values[0]
-        st.image(f"./mapas/{IMAGEM}.jpeg", caption=f'Mapa do {estado}')
+        st.image(f"./mapas/{IMAGEM}.jpeg")
 with g1:
     if opcao == "Região" and regiao:
         IMAGEM_2 = dfr_filtered2['IMG_JPEG_1'].values[0]
-        st.image(f"./REGIOES/{IMAGEM_2}.jpeg", caption=f'Região {regiao}')
+        st.image(f"./REGIOES/{IMAGEM_2}.jpeg")
 
 if opcao == "Brasil":
     with g2:
@@ -312,12 +338,12 @@ if opcao == "Brasil":
 
             labels = [f"{bins[i]}–{bins[i+1]}" for i in range(len(bins)-1)]
             
-            plt.figure(figsize=(8, 4.5))
-            bars = plt.bar(labels, percentages, color="#1A4466", edgecolor="white", alpha=1)
+            plt.figure(figsize=(8, 4.2))
+            bars = plt.bar(labels, percentages, color="#082C4F", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
             plt.ylabel("Frequência (%)")
             plt.title("Histograma das Adequações (Frequência de ocorrências das notas)")
-            plt.grid(True, alpha= 0.4)
+            plt.grid(True, alpha= 0.2)
 
             st.pyplot(plt)
         with g1:
@@ -394,7 +420,7 @@ if opcao == "Brasil":
             st.image("./Calculadora/conceito_1.png", width=760)
     st.markdown(f"""
     <p class="big-font">
-    A análise econômica pode utilizar métricas como o Custo Nivelado de Produção(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de produção.
+    A análise econômica pode utilizar métricas como o Custo Nivelado de Processamento(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
     </p>
         """, unsafe_allow_html=True)
 
