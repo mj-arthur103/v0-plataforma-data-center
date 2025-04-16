@@ -221,7 +221,7 @@ st.sidebar.divider()
 st.sidebar.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
 
 # Logo do ISI no final da sidebar
-st.sidebar.image("./isi/ISI_White.png", use_container_width=True)
+st.sidebar.image("isi/ISI_White.png", use_container_width=True)
 
 col1, col2, col3 = st.columns([5, 5, 5])
 
