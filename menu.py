@@ -343,7 +343,7 @@ if opcao == "Brasil":
 
             labels = [f"{bins[i]}–{bins[i+1]}" for i in range(len(bins)-1)]
 
-            fig2 = plt.figure(figsize=(8, 4.25))
+            fig2 = plt.figure(figsize=(8, 4.26))
             bars = plt.bar(labels, percentages, color="#082C4F", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
             plt.ylabel("Frequência (%)")
@@ -414,7 +414,7 @@ if opcao == "Brasil":
                     st.error("Latitude e longitude devem ser números válidos.")
     st.divider()
     st.markdown("<h3 style='color: black;'>Calculadora de Viabilidade</h3>", unsafe_allow_html=True)
-    h1,h2=st.columns([2, 1.3])
+    h1,h2=st.columns([2, 1.31])
 
     with h1:
         st.image("./Calculadora/Conceito.png",use_container_width=True)
