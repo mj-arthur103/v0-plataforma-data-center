@@ -425,7 +425,7 @@ if opcao == "Brasil":
             st.image("./Calculadora/conceito_1.png", use_container_width=True)
     st.markdown(f"""
     <p class="big-font" style='text-align: justify;'>
-    A análise econômica pode utilizar métricas como o Custo Nivelado de Processamento(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
+    A análise econômica pode utilizar métricas como o Custo Nivelado de Transmissão e Processamento(Levelized Cost of Processing - LCO<sub>TP</sub>) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
     </p>
         """, unsafe_allow_html=True)
     st.markdown(f"""
