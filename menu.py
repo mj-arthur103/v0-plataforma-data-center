@@ -428,6 +428,25 @@ if opcao == "Brasil":
     A análise econômica pode utilizar métricas como o Custo Nivelado de Processamento(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
     </p>
         """, unsafe_allow_html=True)
+    st.markdown(f"""
+    <p class="big-font" style='text-align: justify;'>
+    •I<sub>0</sub> = investimento inicial($);
+    <br>
+    •I<sub>t</sub> = investimento no ano t($/ano);
+    <br>
+    •E<sub>t</sub> = custos da eletricidade consumida no ano t($/ano);
+    <br>
+    •M<sub>t</sub> = outros custos operacionais no ano t($/ano);
+    <br>
+    •D<sub>t</sub>= transmissão, processamento, armazenamento de dados no ano t(GB/ano);
+    <br>
+    •r = taxa de desconto(%);
+    <br>
+    •n = vida útil(ano);
+    <br>
+    •t = ano ao longo da vida útil(ano).
+    </p>
+        """, unsafe_allow_html=True)
 
 elif opcao == "Região" and regiao:
         with g2:
