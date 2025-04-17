@@ -226,7 +226,7 @@ mostrar = st.sidebar.radio("Qual cenário você deseja visualizar?", ["Cenário 
 st.sidebar.divider()
 
 #Espaço
-st.sidebar.markdown("<br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+st.sidebar.markdown("<br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
 
 # Logo do ISI no final da sidebar
 
