@@ -312,17 +312,19 @@ with g1:
 
 if opcao == "Brasil":
     with g2:
+        # Gráfico de barras - Nota média por estado
         df['NOTA_MEDIA'] = df['NOTA_MEDIA'].str.replace(',', '.').astype(float)
         df_estados = df[df['SIGLA'] != 'BR']
         df_grouped = df_estados.sort_values(by='NOTA_MEDIA', ascending=False)
 
-        plt.figure(figsize=(8, 3))
+        fig1 = plt.figure(figsize=(8, 3))
         plt.bar(df_grouped['SIGLA'], df_grouped['NOTA_MEDIA'], color='#082C4F')
         plt.xlabel('Estado')
         plt.ylabel('Nota Média')
         plt.title('Nota Média por Estado')
-        st.pyplot(plt)
+        st.pyplot(fig1, use_container_width=True)
 
+        # Histograma - Frequência das notas por km²
         with rasterio.open("./nota_5/nota_5.tif") as dataset:
             band = dataset.read(1)
             nodata_value = dataset.nodata
@@ -340,15 +342,15 @@ if opcao == "Brasil":
             percentages = (hist / total) * 100
 
             labels = [f"{bins[i]}–{bins[i+1]}" for i in range(len(bins)-1)]
-            
-            plt.figure(figsize=(8, 4.22))
+
+            fig2 = plt.figure(figsize=(8, 4.25))
             bars = plt.bar(labels, percentages, color="#082C4F", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
             plt.ylabel("Frequência (%)")
             plt.title("Histograma das Adequações (Frequência de ocorrências das notas)")
-            plt.grid(True, alpha= 0.2)
+            plt.grid(True, alpha=0.2)
 
-            st.pyplot(plt)
+            st.pyplot(fig2, use_container_width=True)
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
         with lat_col:
@@ -430,6 +432,8 @@ if opcao == "Brasil":
         """, unsafe_allow_html=True)
     st.markdown(f"""
     <p class="big-font" style='text-align: justify;'>
+    Legenda Fórmula:
+    <br>
     •I<sub>0</sub> = investimento inicial($);
     <br>
     •I<sub>t</sub> = investimento no ano t($/ano);
