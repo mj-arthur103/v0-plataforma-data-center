@@ -138,7 +138,10 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 
-st.title('Estratégias Locacionais para Infraestruturas de Data Centers no Brasil')
+st.markdown(
+    "<h1 style='color: black;'>Estratégias Locacionais para Infraestruturas de Data Centers no Brasil</h1>",
+    unsafe_allow_html=True
+)
 
 st.markdown("""
 <style>
@@ -150,7 +153,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown(f"""
-<p class="big-font">            
+<p class="big-font" style='text-align: justify;'>            
 No contexto da chamada Quarta Revolução Industrial, o uso intensivo de dados e sistemas digitais interconectados é indispensável para o desenvolvimento econômico, gerando aumento da competitividade, da produtividade, da inovação e dos níveis de emprego e renda.
 <br/>
 <br/>                        
@@ -278,7 +281,7 @@ with col1:
 with col2:
     st.markdown(f"""
         <div class="hover-box">
-            <h4>Área disponível com nota maior que 5</h4>
+            <h4>Área com nota maior que 5</h4>
             <p style="font-size:22px;">{area_disp_20} km²</p>
         </div>
     """, unsafe_allow_html=True)
@@ -349,12 +352,14 @@ if opcao == "Brasil":
         with g1:
             lat_col, lon_col = st.columns(2)  # Latitude e Longitude lado a lado
         with lat_col:
-            latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505")
+            st.markdown("<label style='color: black; font-size: 16px; margin-bottom: 0.1rem; display: block;'>Latitude</label>", unsafe_allow_html=True)
+            latitude_str = st.text_input("Latitude", placeholder="Ex: -23.5505", label_visibility="collapsed")
             if latitude_str and not re.match(r"^-?\d+(\.\d+)?$", latitude_str.strip()):
                 st.error("Digite uma latitude válida (apenas números, ponto e sinal negativo)")
 
         with lon_col:
-            longitude_str = st.text_input("Longitude", placeholder="Ex: -46.6333")
+            st.markdown("<label style='color: black; font-size: 16px; margin-bottom: 0.1rem; display: block;'>Longitude</label>", unsafe_allow_html=True)
+            longitude_str = st.text_input("Longitude", placeholder="Ex: -46.5214", label_visibility="collapsed")
             if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
                 st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
@@ -406,7 +411,7 @@ if opcao == "Brasil":
                 except ValueError:
                     st.error("Latitude e longitude devem ser números válidos.")
     st.divider()
-    st.subheader('Calculadora de Viabiliade')
+    st.markdown("<h3 style='color: black;'>Calculadora de Viabilidade</h3>", unsafe_allow_html=True)
     h1,h2=st.columns([2, 1.3])
 
     with h1:
@@ -419,7 +424,7 @@ if opcao == "Brasil":
         with st.container():
             st.image("./Calculadora/conceito_1.png", use_container_width=True)
     st.markdown(f"""
-    <p class="big-font">
+    <p class="big-font" style='text-align: justify;'>
     A análise econômica pode utilizar métricas como o Custo Nivelado de Processamento(Levelized Cost of Processing - LCOP) que é um indicador para avaliar o custo médio ao longo da vida útil de um sistema de processamento.
     </p>
         """, unsafe_allow_html=True)
