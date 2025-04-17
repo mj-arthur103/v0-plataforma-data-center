@@ -167,6 +167,30 @@ Nesse sentido, a atração de centros de dados (Data Centers), apontada pela Est
 
 st.divider()
 
+#Logo ISI
+def get_image_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+base64_logo = get_image_base64("isi/ISI_White.png")
+st.sidebar.markdown(
+    f"""
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="data:image/png;base64,{base64_logo}" alt="Logo ISI"
+            style="
+                width: 3000px;
+                height: auto;
+                background-color: none;
+                padding: 8px;
+                border-radius: 6px;
+                box-shadow: none;
+            ">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 if "show_inputs" not in st.session_state:
     st.session_state.show_inputs = True
 
@@ -225,32 +249,6 @@ mostrar = st.sidebar.radio("Qual cenário você deseja visualizar?", ["Cenário 
 
 st.sidebar.divider()
 
-#Espaço
-st.sidebar.markdown("<br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
-
-# Logo do ISI no final da sidebar
-
-def get_image_base64(path):
-    with open(path, "rb") as f:
-        return base64.b64encode(f.read()).decode()
-
-base64_logo = get_image_base64("isi/ISI_White.png")
-st.sidebar.markdown(
-    f"""
-    <div style="text-align: center; margin-bottom: 20px;">
-        <img src="data:image/png;base64,{base64_logo}" alt="Logo ISI"
-            style="
-                width: 180px;
-                height: auto;
-                background-color: none;
-                padding: 8px;
-                border-radius: 6px;
-                box-shadow: none;
-            ">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 col1, col2, col3 = st.columns([5, 5, 5])
 
@@ -432,7 +430,7 @@ if opcao == "Brasil":
         """, unsafe_allow_html=True)
     st.markdown(f"""
     <p class="big-font" style='text-align: justify;'>
-    Legenda Fórmula:
+    Legenda (LCO<sub>TP</sub>):
     <br>
     •I<sub>0</sub> = investimento inicial($);
     <br>
