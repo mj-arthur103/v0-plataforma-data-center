@@ -341,7 +341,7 @@ if opcao == "Brasil":
 
             labels = [f"{bins[i]}–{bins[i+1]}" for i in range(len(bins)-1)]
             
-            plt.figure(figsize=(8, 4.2))
+            plt.figure(figsize=(8, 4.22))
             bars = plt.bar(labels, percentages, color="#082C4F", edgecolor="white", alpha=1)
             plt.xlabel("Nota por Km²")
             plt.ylabel("Frequência (%)")
