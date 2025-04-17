@@ -300,7 +300,7 @@ l1, l2, l3 = st.columns([2, 8, 2])
 with g1:
     if opcao == "Brasil":
         IMAGEM_3 = df.loc[df['SIGLA'] == 'BR', 'IMG_JPEG'].values[0]
-        st.image(f"./mapas/{IMAGEM_3}.jpeg")
+        st.image(f"./mapas/{IMAGEM_3}.jpeg", use_container_width=True)
 with l2:        
     if opcao == "Estado" and estado:
         IMAGEM = df_filtered['IMG_JPEG'].values[0]
