@@ -381,7 +381,7 @@ if opcao == "Brasil":
                     longitude = float(longitude_str)
 
                     nome_municipio, uf = get_location_info(latitude, longitude)
-                    if "Coordenada inválida" in (nome_municipio, uf) or "Erro" in (nome_municipio, uf):
+                    if nota_pixel < 0:
                         st.error("Coordenadas inválidas ou fora do território nacional.")
                     else:
                     # Caixas aparecem abaixo dos campos
