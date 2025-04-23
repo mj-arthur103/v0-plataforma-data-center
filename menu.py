@@ -225,6 +225,15 @@ def get_location_info(lat, lon):
     except Exception as e:
         return "Erro na consulta", "Erro na consulta"
 
+def get_pixel_value(lat, lon, raster_path="./nota_5/NotaFinal.tif"):
+                with rasterio.open(raster_path) as dataset:
+                    try:
+                        row, col = dataset.index(float(lon), float(lat))
+                        value = float(dataset.read(1)[row, col])
+                        return value
+                    except:
+                        return (-1)
+
 # Sidebar - Opções de visualização
 st.sidebar.subheader('Escolha qual mapa deseja visualizar:')
 opcao = st.sidebar.radio("Qual mapa você deseja visualizar?", ["Brasil", "Região", "Estado"])
@@ -363,15 +372,6 @@ if opcao == "Brasil":
             if longitude_str and not re.match(r"^-?\d+(\.\d+)?$", longitude_str.strip()):
                 st.error("Digite uma longitude válida (apenas números, ponto e sinal negativo)")
 
-            def get_pixel_value(lat, lon, raster_path="./nota_5/NotaFinal.tif"):
-                with rasterio.open(raster_path) as dataset:
-                    try:
-                        row, col = dataset.index(float(lon), float(lat))
-                        value = dataset.read(1)[row, col]
-                        return value
-                    except:
-                        return "Coordenadas fora da área do raster"
-
         # Se os campos estiverem preenchidos, mostra as caixas abaixo
         with g1:
             if latitude_str and longitude_str:
@@ -409,7 +409,7 @@ if opcao == "Brasil":
                             """, unsafe_allow_html=True)
 
                 except ValueError:
-                    st.error("Latitude e longitude devem ser números válidos.")
+                    print("error")
     st.divider()
     st.markdown("<h3 style='color: black;'>Calculadora de Viabilidade</h3>", unsafe_allow_html=True)
     h1,h2=st.columns([2, 1.31])
