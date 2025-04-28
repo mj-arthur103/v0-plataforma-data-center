@@ -135,7 +135,11 @@ st.markdown("""
         box-shadow: none !important;
         border-radius: 0 !important;
         }
-    """, unsafe_allow_html=True)
+        .stAlert p {
+            color: black !important;
+        }
+    </style>   
+""", unsafe_allow_html=True)
 
 
 st.markdown(
